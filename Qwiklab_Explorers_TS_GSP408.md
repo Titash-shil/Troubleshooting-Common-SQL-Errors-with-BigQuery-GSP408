@@ -63,27 +63,18 @@ GROUP BY geoNetwork_city
 ORDER BY distinct_visitors DESC'
 
 bq query --use_legacy_sql=false '#standardSQL
-SELECT
-geoNetwork_city,
-SUM(totals_transactions) AS total_products_ordered,
-COUNT( DISTINCT fullVisitorId) AS distinct_visitors,
-SUM(totals_transactions) / COUNT( DISTINCT fullVisitorId) AS avg_products_ordered
-FROM
-`data-to-insights.ecommerce.rev_transactions`
-GROUP BY geoNetwork_city
-ORDER BY avg_products_ordered DESC'
+SELECT hits_product_v2ProductName, hits_product_v2ProductCategory
+FROM `data-to-insights.ecommerce.rev_transactions`
+GROUP BY 1,2'
 
 bq query --use_legacy_sql=false '#standardSQL
 SELECT
-geoNetwork_city,
-SUM(totals_transactions) AS total_products_ordered,
-COUNT( DISTINCT fullVisitorId) AS distinct_visitors,
-SUM(totals_transactions) / COUNT( DISTINCT fullVisitorId) AS avg_products_ordered
-FROM
-`data-to-insights.ecommerce.rev_transactions`
-GROUP BY geoNetwork_city
-HAVING avg_products_ordered > 20
-ORDER BY avg_products_ordered DESC'
+COUNT(hits_product_v2ProductName) as number_of_products,
+hits_product_v2ProductCategory
+FROM `data-to-insights.ecommerce.rev_transactions`
+WHERE hits_product_v2ProductName IS NOT NULL
+GROUP BY hits_product_v2ProductCategory
+ORDER BY number_of_products DESC'
 
 bq query --use_legacy_sql=false '#standardSQL
 SELECT

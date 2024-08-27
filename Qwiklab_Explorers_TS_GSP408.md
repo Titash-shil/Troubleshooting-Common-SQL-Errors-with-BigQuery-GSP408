@@ -18,14 +18,14 @@ FROM `data-to-insights.ecommerce.rev_transactions` LIMIT 1000'
 
 bq query --use_legacy_sql=false '#standardSQL
 SELECT
-fullVisitorId
-, hits_page_pageTitle
+  fullVisitorId
+  , hits_page_pageTitle
 FROM `data-to-insights.ecommerce.rev_transactions` LIMIT 1000'
 
 bq query --use_legacy_sql=false '#standardSQL
 SELECT
-fullVisitorId
-, hits_page_pageTitle
+  fullVisitorId
+  , hits_page_pageTitle
 FROM `data-to-insights.ecommerce.rev_transactions` LIMIT 1000'
 
 bq query --use_legacy_sql=false '#standardSQL
